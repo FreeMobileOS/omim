@@ -14,7 +14,6 @@ endif
 ####################################################################################
 
 MY_PREBUILT_LIBS_PATH := ../../../omim-android-$(OMIM_CONFIG)-$(TARGET_ARCH_ABI)/out/$(OMIM_CONFIG)
-
 # Avoid clean errors due to missing external static libs
 ifneq ($(MAKECMDGOALS),clean)
 
@@ -46,7 +45,6 @@ LOCAL_MODULE := mapswithme
 LOCAL_STATIC_LIBRARIES := $(prebuild_static_libs)
 
 LOCAL_CFLAGS := -ffunction-sections -fdata-sections -Wno-extern-c-compat
-
 ifneq ($(NDK_DEBUG),1)
   ifeq ($(PRODUCTION),1)
     OMIM_CONFIG := production
@@ -57,8 +55,12 @@ ifneq ($(NDK_DEBUG),1)
   LOCAL_LFLAGS += -O3
 endif
 
+ifeq ($(TARGET_ARCH_ABI), arm64-v8a)
+OMIM_ANDROID_64 := 1
+LOCAL_CFLAGS += -DOMIM_ANDROID_64
+endif
 
-TARGET_PLATFORM := android-15
+TARGET_PLATFORM := android-21
 
 LOCAL_HEADER_FILES := \
 	../../private.h \

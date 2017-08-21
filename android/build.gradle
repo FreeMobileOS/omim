@@ -100,7 +100,7 @@ def getDate() {
 
 def osName = System.properties['os.name'].toLowerCase()
 
-project.ext.versionCodes = ['armeabi-v7a': 1, 'x86': 2]
+project.ext.versionCodes = ['armeabi-v7a': 1, 'x86': 2, 'arm64-v8a':3]
 project.ext.appId = 'com.mapswithme.maps.pro'
 
 crashlytics {
@@ -274,7 +274,7 @@ android {
     println ("Create separate apks: " + enabled)
     enable enabled
     reset()
-    include 'x86', 'armeabi-v7a'
+    include 'x86', 'armeabi-v7a', 'arm64-v8a'
     universalApk true
   }
 
@@ -385,7 +385,7 @@ project.ext.NDK_BUILD = android.getNdkDirectory().toString() + '/ndk-build'
 if (System.properties['os.name'].toLowerCase().contains('windows'))
   project.ext.NDK_BUILD += ".cmd"
 
-def archs = ['x86', 'armeabi-v7a']
+def archs = ['x86', 'armeabi-v7a' , 'arm64-v8a']
 def buildTypes = [[ndkType: 'release', cppType: "production", flags: propReleaseNdkFlags], [ndkType: 'debug', cppType: "debug", flags: propDebugNdkFlags]]
 
 // Tasks for generating obb files for Google Play

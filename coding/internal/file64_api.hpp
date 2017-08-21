@@ -21,11 +21,13 @@
 #else
   // POSIX standart.
   #include <sys/types.h>
-  #ifdef OMIM_OS_ANDROID
-    static_assert(sizeof(off_t) == 4, "");
-  #else
+#ifdef OMIM_OS_ANDROID
+#if defined (ANDROID64) || (OMIM_ANDROID_64)
     static_assert(sizeof(off_t) == 8, "");
-  #endif
+#else
+    static_assert(sizeof(off_t) == 4, "");
+#endif
+#endif
   #define fseek64 fseeko
   #define ftell64 ftello
 
