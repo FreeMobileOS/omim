@@ -1025,8 +1025,8 @@ string Storage::GetFileDownloadUrl(string const & baseUrl,
 
 string Storage::GetFileDownloadUrl(string const & baseUrl, string const & fileName) const
 {
-  return baseUrl + OMIM_OS_NAME "/" + strings::to_string(GetCurrentDataVersion()) + "/" +
-      UrlEncode(fileName);
+  //return baseUrl + OMIM_OS_NAME "/" + strings::to_string(GetCurrentDataVersion()) + "/" + UrlEncode(fileName);
+  return baseUrl + "direct/" + strings::to_string(GetCurrentDataVersion()) +  "/" + UrlEncode(fileName);
 }
 
 TCountryId Storage::FindCountryIdByFile(string const & name) const
