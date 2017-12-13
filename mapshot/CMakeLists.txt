@@ -59,6 +59,8 @@ omim_link_libraries(
   sdf_image
   vulkan_wrapper
   ${LIBZ}
+  mwm_diff
+  bsdiff
 )
 
 if (PLATFORM_LINUX)
@@ -70,3 +72,4 @@ endif()
 
 link_opengl(${PROJECT_NAME})
 link_qt5_core(${PROJECT_NAME})
+link_qt5_network(${PROJECT_NAME})
