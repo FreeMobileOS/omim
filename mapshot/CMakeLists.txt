@@ -52,7 +52,10 @@ omim_link_libraries(
   stb_image
   sdf_image
   ${LIBZ}
+  mwm_diff
+  bsdiff
 )
 
 link_opengl(${PROJECT_NAME})
 link_qt5_core(${PROJECT_NAME})
+link_qt5_network(${PROJECT_NAME})
