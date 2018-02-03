@@ -21,7 +21,8 @@
 #else
   // POSIX standart.
   #include <sys/types.h>
-  #ifdef OMIM_OS_ANDROID
+  #include <limits.h>
+  #if __WORDSIZE == 32
     static_assert(sizeof(off_t) == 4, "");
   #else
     static_assert(sizeof(off_t) == 8, "");
