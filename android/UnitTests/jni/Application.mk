@@ -1,7 +1,7 @@
 NDK_TOOLCHAIN_VERSION := clang
-APP_ABI := armeabi-v7a
+APP_ABI := arm64-v8a
 
-APP_PLATFORM := android-15
+APP_PLATFORM := android-21
 APP_STL := c++_static
 
 # libc++-specific issues: -std=c++11" is turned on by default.
@@ -10,7 +10,7 @@ APP_CPPFLAGS += -Wno-deprecated-register
 
 #@todo(vbykoianko) Build tests for android x86 platform
 #ifeq (x$(NDK_ABI_TO_BUILD), x)
-#  APP_ABI := armeabi-v7a x86
+#  APP_ABI := arm64-v8a armeabi-v7a x86
 #else
 #  APP_ABI := $(NDK_ABI_TO_BUILD)
 #endif
