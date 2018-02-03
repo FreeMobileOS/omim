@@ -118,7 +118,7 @@ def getDate() {
 
 def osName = System.properties['os.name'].toLowerCase()
 
-project.ext.versionCodes = ['armeabi-v7a': 1, 'x86': 2]
+project.ext.versionCodes = ['armeabi-v7a': 1, 'x86': 2, 'arm64-v8a': 3]
 project.ext.appId = 'com.mapswithme.maps.pro'
 
 crashlytics {
@@ -202,28 +202,30 @@ android {
       if (project.hasProperty('pch')) pchFlag = 'ON'
 
       cmake {
-        cppFlags '-fexceptions', '-frtti', '-m32'
-        cFlags '-ffunction-sections', '-fdata-sections',
-               '-Wno-extern-c-compat', '-m32'
-        arguments '-DANDROID_TOOLCHAIN=clang', '-DANDROID_STL=c++_static',
-                  "-DOS=$osName", '-DSKIP_TESTS=ON', "-DUSE_PCH=$pchFlag"
+        cppFlags '-fexceptions', '-frtti', "-DANDROID64"
+        cFlags '-ffunction-sections', '-fdata-sections', '-Wno-extern-c-compat', "-DANDROID64"
+        arguments '-DANDROID_TOOLCHAIN=clang', '-DANDROID_STL=c++_static', "-DOS=$osName", "-DSKIP_TESTS=ON"
       }
     }
 
     ndk {
       abiFilters = new HashSet<>()
-      if (project.hasProperty('arm')) {
+      if (project.hasProperty('arm64')) {
+        println("Building for the ARM64 architecture")
+        abiFilters.add("arm64-v8a")
+      } else if (project.hasProperty('arm')) {
         println("Building for the ARM architecture")
         abiFilters.add("armeabi-v7a")
       } else if (project.hasProperty('x86')) {
         println("Building for the x86 architecture")
         abiFilters.add("x86")
       } else {
-        if (!project.hasProperty('splitApk')) {
-          println("Building for the ARM and x86 architectures")
-          abiFilters.add("armeabi-v7a")
-          abiFilters.add("x86")
-        }
+          if (!project.hasProperty('splitApk')) {
+              println("Building for the ARM64, ARM and x86 architectures")
+              abiFilters.add("arm64-v8a")
+              abiFilters.add("armeabi-v7a")
+              abiFilters.add("x86")
+          }
       }
     }
   }
@@ -369,7 +371,7 @@ android {
     println ("Create separate apks: " + enabled)
     enable enabled
     reset()
-    include 'x86', 'armeabi-v7a'
+    include 'x86', 'armeabi-v7a', 'arm64-v8a'
     universalApk true
   }
 
@@ -487,7 +489,7 @@ project.ext.NDK_BUILD = android.getNdkDirectory().toString() + '/ndk-build'
 if (System.properties['os.name'].toLowerCase().contains('windows'))
   project.ext.NDK_BUILD += ".cmd"
 
-def archs = ['x86', 'armeabi-v7a']
+def archs = ['x86', 'armeabi-v7a', 'arm64-v8a']
 def buildTypes = [[ndkType: 'release', cppType: "production", flags: propReleaseNdkFlags], [ndkType: 'debug', cppType: "debug", flags: propDebugNdkFlags]]
 
 // Tasks for generating obb files for Google Play
