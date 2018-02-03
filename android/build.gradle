@@ -209,9 +209,9 @@ android {
       if (project.hasProperty('pch')) pchFlag = 'ON'
 
       cmake {
-        cppFlags '-fexceptions', '-frtti'
+        cppFlags '-fexceptions', '-frtti', "-DANDROID64"
         cFlags '-ffunction-sections', '-fdata-sections',
-               '-Wno-extern-c-compat'
+               '-Wno-extern-c-compat', "-DANDROID64"
         arguments '-DANDROID_TOOLCHAIN=clang', '-DANDROID_STL=c++_static',
                   "-DOS=$osName", '-DSKIP_TESTS=ON', "-DUSE_PCH=$pchFlag"
       }
@@ -219,8 +219,13 @@ android {
 
     ndk {
       abiFilters = new HashSet<>()
-      if (project.hasProperty("arm32")) {
+      if (project.hasProperty("arm32"))
         println("Building for the ARM32 architecture")
+      else if (project.hasProperty('arm64')) {
+        println("Building for the ARM64 architecture")
+        abiFilters.add("arm64-v8a")
+      } else if (project.hasProperty('arm')) {
+        println("Building for the ARM architecture")
         abiFilters.add("armeabi-v7a")
       } else if (project.hasProperty("arm64")) {
         println("Building for the ARM64 architecture")
@@ -528,6 +533,9 @@ project.ext.PARAM_PARALLEL_TASK_COUNT = '-j' + (Runtime.runtime.availableProcess
 project.ext.NDK_BUILD = android.getNdkDirectory().toString() + '/ndk-build'
 if (System.properties['os.name'].toLowerCase().contains('windows'))
   project.ext.NDK_BUILD += ".cmd"
+
+def archs = ['x86', 'armeabi-v7a', 'arm64-v8a']
+def buildTypes = [[ndkType: 'release', cppType: "production", flags: propReleaseNdkFlags], [ndkType: 'debug', cppType: "debug", flags: propDebugNdkFlags]]
 
 // Tasks for generating obb files for Google Play
 def unalignedFonts = "${propObbFontsOutput}.unaligned"

@@ -38,12 +38,12 @@ if ( $(toolset:I=^mingw) || $(toolset:I=^gcc) || $(toolset:I=^bada) || $(toolset
 
             if ( $(toolset:I=stlport) )
             {
-                LDFLAGS += -L"%$(toolset)_PATH%\\sources\\cxx-stl\\stlport\\libs\\armeabi-v7a" ;
+                LDFLAGS += -L"%$(toolset)_PATH%\\sources\\cxx-stl\\stlport\\libs\\arm64-v8a" ;
                 LDFLAGS += -lstlport_static ;
             }
             else
             {
-                LDFLAGS += -L"%$(toolset)_PATH%\\sources\\cxx-stl\\gnu-libstdc++\\libs\\armeabi-v7a" ;
+                LDFLAGS += -L"%$(toolset)_PATH%\\sources\\cxx-stl\\gnu-libstdc++\\libs\\arm64-v8a" ;
                 LDFLAGS += -lgnustl_static -lsupc++ ;
             }
 
@@ -131,7 +131,7 @@ if ( $(toolset:I=^mingw) || $(toolset:I=^gcc) || $(toolset:I=^bada) || $(toolset
             else
             {
                 RESULT += -isystem"%$(toolset)_path%/sources/cxx-stl/gnu-libstdc++/include" ;
-                RESULT += -isystem"%$(toolset)_path%/sources/cxx-stl/gnu-libstdc++/libs/armeabi-v7a/include" ;
+                RESULT += -isystem"%$(toolset)_path%/sources/cxx-stl/gnu-libstdc++/libs/arm64-v8a/include" ;
             }
 
             RESULT += -isystem"%$(toolset)_path%/platforms/android-5/arch-arm/usr/include" ;
