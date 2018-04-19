@@ -202,8 +202,8 @@ android {
       if (project.hasProperty('pch')) pchFlag = 'ON'
 
       cmake {
-        cppFlags '-fexceptions', '-frtti', "-DANDROID64"
-        cFlags '-ffunction-sections', '-fdata-sections', '-Wno-extern-c-compat', "-DANDROID64"
+        cppFlags '-fexceptions', '-frtti', "-DANDROID64", "-DANDROID64", "-DANDROID64", "-DANDROID64", "-DANDROID64", "-DANDROID64"
+        cFlags '-ffunction-sections', '-fdata-sections', '-Wno-extern-c-compat', "-DANDROID64", "-DANDROID64", "-DANDROID64", "-DANDROID64", "-DANDROID64", "-DANDROID64"
         arguments '-DANDROID_TOOLCHAIN=clang', '-DANDROID_STL=c++_static', "-DOS=$osName", "-DSKIP_TESTS=ON"
       }
     }
