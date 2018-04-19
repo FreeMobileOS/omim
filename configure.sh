@@ -31,7 +31,7 @@ else
     echo "Initializing repository with default values in Open-Source mode."
     echo '
 #pragma once
-
+#define GOOGLE_WEB_CLIENT_ID ""
 #define ALOHALYTICS_URL ""
 #define FLURRY_KEY "12345678901234567890"
 #define APPSFLYER_KEY ""
